@@ -56,11 +56,19 @@ public class SpringExtensionFactory implements ExtensionFactory {
         CONTEXTS.clear();
     }
 
+    /**
+     * 从Spring容器中获取bean
+     * @param type object type.
+     * @param name object name.
+     * @param <T>
+     * @return
+     */
     @Override
     @SuppressWarnings("unchecked")
     public <T> T getExtension(Class<T> type, String name) {
 
         //SPI should be get from SpiExtensionFactory
+        // 如果接口上存在@SPI，就不从Spring中获取对象了
         if (type.isInterface() && type.isAnnotationPresent(SPI.class)) {
             return null;
         }
